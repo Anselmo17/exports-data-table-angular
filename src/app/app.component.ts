@@ -9,7 +9,6 @@ import { ExportAsService, ExportAsConfig, SupportedExtensions } from 'ngx-export
 })
 
 export class AppComponent {
-  title = 'export-data-table';
 
   rows = Array(10).fill(0).map((x, i) => i);
 
@@ -18,9 +17,10 @@ export class AppComponent {
     type: 'pdf',
     elementIdOrContent: 'mytable',
     options: {
-      jsPDF: {
-        orientation: 'landscape'
-      },
+      orientation: 'landscape',
+      margins: {
+        top: '90'
+      }
     }
   };
 
@@ -38,7 +38,7 @@ export class AppComponent {
     if (opt) {
       this.config.options.jsPDF.orientation = opt;
     }
-    const filename = `dados_${new Date().toLocaleDateString()}`
+    const filename = `dados_${new Date().toLocaleDateString().replace(/[/]/g,'-')}`;
     this.exportAsService.save(this.config, filename).subscribe(() => {
       // save started
     });
