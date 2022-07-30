@@ -21,7 +21,6 @@ export class AppComponent {
       jsPDF: {
         orientation: 'landscape'
       },
-      // pdfCallbackFn: this.pdfCallbackFn // to add header and footer
     }
   };
 
@@ -32,9 +31,6 @@ export class AppComponent {
   exportAsString(type: SupportedExtensions, opt?: string) {
     this.config.elementIdOrContent = 'mytable';
     this.exportAs(type, opt);
-    /*setTimeout(() => {
-      this.config.elementIdOrContent = 'mytable';
-    }, 1000);*/
   }
 
   exportAs(type: SupportedExtensions, opt?: string) {
@@ -42,17 +38,9 @@ export class AppComponent {
     if (opt) {
       this.config.options.jsPDF.orientation = opt;
     }
-    this.exportAsService.save(this.config, 'myFile').subscribe(() => {
+    const filename = `dados_${new Date().toLocaleDateString()}`
+    this.exportAsService.save(this.config, filename).subscribe(() => {
       // save started
     });
-    // this.exportAsService.get(this.config).subscribe(content => {
-    //   const link = document.createElement('a');
-    //   const fileName = 'export.pdf';
-
-    //   link.href = content;
-    //   link.download = fileName;
-    //   link.click();
-    //   console.log(content);
-    // });
   }
 }
